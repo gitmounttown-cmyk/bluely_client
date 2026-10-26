@@ -1,18 +1,34 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:5008/api", // Update port if your backend runs elsewhere
+  baseURL: "http://localhost:5008/api",
 });
 
 axiosClient.interceptors.request.use(
   (config) => {
-    // If sending FormData, delete Content-Type so the browser automatically sets the multipart boundary
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
     if (config.data instanceof FormData) {
       delete config.headers["Content-Type"];
     }
+    
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axiosClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
     return Promise.reject(error);
   }
 );

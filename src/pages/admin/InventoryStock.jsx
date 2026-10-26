@@ -86,6 +86,7 @@ export default function InventoryStock() {
             <tr className="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
               <th className="py-3 px-6">Product Name</th>
               <th className="py-3 px-6">Category</th>
+              <th className="py-3 px-6">Volume</th>
               <th className="py-3 px-6">Price</th>
               <th className="py-3 px-6">Stock</th>
               <th className="py-3 px-6">Status</th>
@@ -121,6 +122,9 @@ export default function InventoryStock() {
                     <td className="py-3.5 px-6 text-gray-600">
                       {typeof item.category === 'object' ? item.category?.name : item.category}
                     </td>
+                    <td className="py-3.5 px-6 text-gray-600 font-medium">
+                      {item.litre || '—'}
+                    </td>
                     <td className="py-3.5 px-6 font-semibold">₹{item.price}</td>
                     <td className="py-3.5 px-6 font-semibold">{item.stock} units</td>
                     <td className="py-3.5 px-6">
@@ -147,7 +151,7 @@ export default function InventoryStock() {
               })
             ) : (
               <tr>
-                <td colSpan="6" className="py-8 text-center text-gray-400 text-sm">
+                <td colSpan="7" className="py-8 text-center text-gray-400 text-sm">
                   No products found. Click "Add New Product" to add your first product.
                 </td>
               </tr>

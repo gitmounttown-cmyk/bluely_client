@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Edit2, Trash2, Folders } from "lucide-react";
 
 import {
@@ -25,11 +25,8 @@ export default function Categories() {
       setError("");
 
       const response = await getCategories();
-      
-      // Handle both raw Axios response and auto-unwrapped response data
       const responseData = response?.data !== undefined ? response.data : response;
 
-      // Safely extract the array from various possible backend formats
       const categoryList = Array.isArray(responseData)
         ? responseData
         : responseData?.categories || responseData?.data;
@@ -54,12 +51,10 @@ export default function Categories() {
     }
   };
 
-  // Fetch categories when the page loads
   useEffect(() => {
     fetchCategories();
   }, []);
 
-  // Open modal for adding a category
   const handleAddCategory = () => {
     setEditingCategory(null);
     setError("");
@@ -67,7 +62,6 @@ export default function Categories() {
     setIsModalOpen(true);
   };
 
-  // Open modal for editing a category
   const handleEditCategory = (category) => {
     setEditingCategory(category);
     setError("");
@@ -75,16 +69,16 @@ export default function Categories() {
     setIsModalOpen(true);
   };
 
-  // Create or update category
-  const handleSave = async (data) => {
+  // Create or update category with FormData
+  const handleSave = async (formData) => {
     try {
       setError("");
       setSuccessMessage("");
 
       if (editingCategory?._id) {
-        await updateCategory(editingCategory._id, data);
+        await updateCategory(editingCategory._id, formData);
       } else {
-        await createCategory(data);
+        await createCategory(formData);
       }
 
       setIsModalOpen(false);
@@ -105,12 +99,10 @@ export default function Categories() {
           "Failed to save category. Please try again."
       );
 
-      // Allow the modal to display the error
       throw err;
     }
   };
 
-  // Delete category
   const handleDelete = async (id) => {
     if (!id) {
       setError("Category ID is missing.");
@@ -140,6 +132,11 @@ export default function Categories() {
           "Failed to delete category. Please try again."
       );
     }
+  };
+
+  const getImageUrl = (url) => {
+    if (!url) return null;
+    return url.startsWith("http") ? url : `http://localhost:5008${url}`;
   };
 
   return (
@@ -196,51 +193,69 @@ export default function Categories() {
       {/* Category Grid */}
       {!loading && categories.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {categories.map((cat) => (
-            <div
-              key={cat._id || cat.name}
-              className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex justify-between items-start">
-                  <h3 className="font-bold text-gray-800 text-base">
-                    {cat.name}
-                  </h3>
+          {categories.map((cat) => {
+            const imgSrc = getImageUrl(cat.imageURL);
+            return (
+              <div
+                key={cat._id || cat.name}
+                className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-3">
+                      {imgSrc ? (
+                        <img
+                          src={imgSrc}
+                          alt={cat.name}
+                          className="w-12 h-12 object-cover rounded-lg border border-gray-100 bg-gray-50 flex-shrink-0"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-xs flex-shrink-0">
+                          Img
+                        </div>
+                      )}
+                      <div>
+                        <h3 className="font-bold text-gray-800 text-base">
+                          {cat.name}
+                        </h3>
+                        <p className="text-gray-500 text-xs mt-0.5 line-clamp-2">
+                          {cat.description || "No description provided"}
+                        </p>
+                      </div>
+                    </div>
 
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleEditCategory(cat)}
-                      title="Edit category"
-                      aria-label={`Edit ${cat.name}`}
-                      className="text-gray-400 hover:text-bluely-600"
-                    >
-                      <Edit2 size={15} />
-                    </button>
+                    <div className="flex gap-2 flex-shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleEditCategory(cat)}
+                        title="Edit category"
+                        aria-label={`Edit ${cat.name}`}
+                        className="text-gray-400 hover:text-bluely-600"
+                      >
+                        <Edit2 size={15} />
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(cat._id)}
-                      title="Delete category"
-                      aria-label={`Delete ${cat.name}`}
-                      className="text-gray-400 hover:text-red-600"
-                    >
-                      <Trash2 size={15} />
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(cat._id)}
+                        title="Delete category"
+                        aria-label={`Delete ${cat.name}`}
+                        className="text-gray-400 hover:text-red-600"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                <p className="text-gray-500 text-xs mt-1">
-                  {cat.description || "No description provided"}
-                </p>
+                <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-xs text-bluely-600 font-semibold">
+                  <span className="flex items-center gap-1.5">
+                    <Folders size={14} /> Active Category Group
+                  </span>
+                </div>
               </div>
-
-              <div className="mt-4 pt-3 border-t border-gray-50 flex items-center gap-2 text-xs text-bluely-600 font-semibold">
-                <Folders size={14} />
-                Active Category Group
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
