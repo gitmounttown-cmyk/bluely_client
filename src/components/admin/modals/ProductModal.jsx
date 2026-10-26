@@ -13,6 +13,7 @@ export default function ProductModal({
     category: "",
     price: "",
     stock: "",
+    litre: "", // Added volume/litre field
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
@@ -27,6 +28,7 @@ export default function ProductModal({
         category: editingProduct?.category?._id || editingProduct?.category || "",
         price: editingProduct?.price || "",
         stock: editingProduct?.stock || "",
+        litre: editingProduct?.litre || "",
       });
       setImageFile(null);
       setImagePreview(editingProduct?.imageURL || "");
@@ -74,6 +76,7 @@ export default function ProductModal({
       data.append("category", formData.category);
       data.append("price", formData.price);
       data.append("stock", formData.stock);
+      data.append("litre", formData.litre.trim()); // Append volume/litre
       
       if (imageFile) {
         data.append("image", imageFile); // Must match multer .single("image")
@@ -169,6 +172,22 @@ export default function ProductModal({
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* Volume / Litre */}
+            <div>
+              <label className="mb-1 block text-sm font-semibold text-gray-700">
+                Volume / Litre (e.g., 1L, 500ml)
+              </label>
+              <input
+                type="text"
+                name="litre"
+                value={formData.litre}
+                onChange={handleChange}
+                placeholder="e.g. 1L"
+                disabled={saving}
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-800 outline-none focus:border-bluely-500 focus:ring-2 focus:ring-bluely-100 disabled:bg-gray-50"
+              />
             </div>
 
             {/* Price & Stock */}

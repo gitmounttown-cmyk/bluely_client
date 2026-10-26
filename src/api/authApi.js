@@ -1,5 +1,4 @@
 import axiosClient from './axiosClient';
 
-export const loginUser = (credentials) => axiosClient.post('/users/login', credentials);
-export const registerUser = (userData) => axiosClient.post('/users/register', userData);
-export const getProfile = () => axiosClient.get('/users/profile');
+export const loginUser = (credentials) => axiosClient.post('/auth/login', credentials);
+export const signupUser = (userData) => axiosClient.post('/auth/signup', userData);
