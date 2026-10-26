@@ -1,0 +1,45 @@
+.inventory-table-container {
+  background: #ffffff;
+  border-radius: 0.875rem;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  margin-top: 1.5rem;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.inventory-table th {
+  background-color: var(--slate-50);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.inventory-table td {
+  padding: 0.875rem 1.5rem;
+  border-bottom: 1px solid var(--slate-100);
+  font-size: 0.875rem;
+}
+
+.inventory-table tr:hover {
+  background-color: var(--slate-50);
+}
+
+.status-badge {
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-badge.in-stock { background: #f0fdf4; color: #15803d; }
+.status-badge.low-stock { background: #fef2f2; color: #b91c1c; }
