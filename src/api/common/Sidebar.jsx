@@ -32,16 +32,16 @@ export default function Sidebar({ isOpen, onClose }) {
 
       {/* Sidebar Navigation */}
       <aside className={`
-        fixed md:static inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-300 flex flex-col justify-between h-screen shrink-0 transition-transform duration-300
+        fixed md:static inset-y-0 left-0 z-50 w-64 bg-[#041A71] text-[#ffffff] flex flex-col justify-between h-screen shrink-0 transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         <div>
           {/* Brand Header */}
-          <div className="h-16 flex items-center justify-between px-6 bg-slate-950">
+          <div className="h-16 flex items-center justify-between px-6 bg-[#031354]">
             <span className="text-xl font-bold tracking-wider text-white">
               BLUELY <span className="text-bluely-500 text-xs uppercase px-2 py-0.5 bg-bluely-500/20 rounded ml-1">Admin</span>
             </span>
-            <button onClick={onClose} className="md:hidden text-slate-400 hover:text-white">
+            <button onClick={onClose} className="md:hidden text-slate-300 hover:text-white">
               <X size={20} />
             </button>
           </div>
@@ -58,8 +58,8 @@ export default function Sidebar({ isOpen, onClose }) {
                   className={({ isActive }) =>
                     `w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${
                       isActive 
-                        ? 'bg-bluely-600 text-white' 
-                        : 'hover:bg-slate-800 hover:text-white text-slate-300'
+                        ? 'bg-bluely-600 text-white shadow-sm' 
+                        : 'hover:bg-white/10 text-[#ffffff]'
                     }`
                   }
                 >
@@ -72,7 +72,7 @@ export default function Sidebar({ isOpen, onClose }) {
         </div>
 
         {/* Sidebar Footer */}
-        <div className="p-4 bg-slate-950 text-xs text-slate-500 text-center">
+        <div className="p-4 bg-[#000000] text-xs text-[#ffffff] text-center">
           Bluely Admin Panel &copy; 2026
         </div>
       </aside>

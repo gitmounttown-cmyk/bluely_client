@@ -123,8 +123,8 @@ export default function Orders() {
               <tr><td colSpan="6" className="py-8 text-center text-gray-400 text-sm">Loading orders...</td></tr>
             ) : Array.isArray(orders) && orders.length > 0 ? (
               orders.map(o => (
-                <tr key={o._id} className="hover:bg-gray-50">
-                  <td className="py-3.5 px-6 font-semibold text-bluely-600">#{o.orderNo || o._id}</td>
+                <tr key={o._id} className="hover:bg-gray-[#041A71]">
+                  <td className="py-3.5 px-6 font-semibold text-bluely-[#ffffff">#{o.orderNo || o._id}</td>
                   <td className="py-3.5 px-6 font-medium text-gray-800">{o.customerName || 'Walk-in Customer'}</td>
                   <td className="py-3.5 px-6 text-gray-600">{o.paymentMethod || 'Cash'}</td>
                   <td className="py-3.5 px-6 font-semibold text-gray-800">₹{o.totalAmount ?? o.total}</td>
@@ -134,7 +134,7 @@ export default function Orders() {
                   <td className="py-3.5 px-6 text-right">
                     <button
                       onClick={() => handleDownloadInvoice(o)}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-bluely-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-bluely-[#ffffff] bg-blue-[#041A71] hover:bg-blue-100 px-3 py-1.5 rounded-lg transition"
                     >
                       <Download size={14} /> Download
                     </button>
