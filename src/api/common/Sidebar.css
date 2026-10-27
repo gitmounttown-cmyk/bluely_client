@@ -1,7 +1,7 @@
 .sidebar-container {
   width: 16rem;
-  background-color: var(--slate-900);
-  color: #cbd5e1;
+  background-color:#0A1F7A;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,7 +13,7 @@
 
 .sidebar-header {
   height: 4rem;
-  background-color: var(--slate-950);
+  background-color:#0A1F7A;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,7 +24,7 @@
 }
 
 .sidebar-badge {
-  background-color: rgba(2, 132, 199, 0.2);
+  background-color: #0A1F7A;
   color: #38bdf8;
   font-size: 0.7rem;
   padding: 0.15rem 0.5rem;
@@ -67,8 +67,8 @@
 
 .sidebar-footer {
   padding: 1rem;
-  background-color: var(--slate-950);
+  background-color: #0A1F7A;
   font-size: 0.75rem;
-  color: #64748b;
+  color: #ffffff;
   text-align: center;
 }

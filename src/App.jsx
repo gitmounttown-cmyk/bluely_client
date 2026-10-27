@@ -52,7 +52,7 @@ export default function App() {
         {/* Protected Dashboard Routes (Wrapped with Sidebar & Navbar Layout) */}
         <Route element={<AdminLayout />}>
           {/* <Route path="/" element={<Navigate to="/billing" replace />} /> */}
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/inventory" element={<InventoryStock />} />
           <Route path="/orders" element={<Orders />} />

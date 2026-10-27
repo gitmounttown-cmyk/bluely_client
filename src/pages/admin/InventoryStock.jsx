@@ -135,7 +135,7 @@ export default function InventoryStock() {
                     <td className="py-3.5 px-6 text-right space-x-2">
                       <button 
                         onClick={() => { setEditingProduct(item); setIsModalOpen(true); }} 
-                        className="text-bluely-600 text-xs px-2 py-1 bg-blue-50 rounded"
+                        className="text-bluely-600 text-xs px-2 py-1 bg-[#041A71] rounded"
                       >
                         Edit
                       </button>

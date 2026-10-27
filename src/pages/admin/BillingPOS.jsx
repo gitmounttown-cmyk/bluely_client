@@ -259,7 +259,7 @@ export default function BillingPOS() {
 
                   <div className="flex justify-between items-center pt-3 border-t border-gray-50">
                     <span className="font-bold text-gray-900 text-base">₹{product.price}</span>
-                    <span className="bg-blue-50 text-bluely-600 p-1.5 rounded-lg text-xs font-semibold flex items-center gap-1">
+                    <span className="bg-[#041A71] text-bluely-600 p-1.5 rounded-lg text-xs font-semibold flex items-center gap-1">
                       <Plus size={14} /> Add
                     </span>
                   </div>
@@ -280,7 +280,7 @@ export default function BillingPOS() {
             <h3 className="font-bold text-gray-800 flex items-center gap-2">
               <ShoppingCart size={18} className="text-bluely-600" /> POS Quick Bill
             </h3>
-            <span className="text-xs bg-blue-50 text-bluely-600 font-semibold px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-[#041A71] text-bluely-600 font-semibold px-2 py-0.5 rounded-full">
               {cart.reduce((sum, item) => sum + item.quantity, 0)} items
             </span>
           </div>
