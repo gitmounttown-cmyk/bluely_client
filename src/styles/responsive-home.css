@@ -1,0 +1,56 @@
+/* ═════════════ RESPONSIVE – HOME ═════════════ */
+
+/* "Why choose us": the 3-column grid with 120px gaps and 350px margins
+   overflowed below ~1100px. Centred, wrapping flex layout instead. */
+@media (max-width: 1100px) {
+  .why-grid-exact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px 60px;
+  }
+  .why-item-exact { width: 170px; }
+  .bottom-left, .bottom-right { margin: 0; grid-column: auto; }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .hero { padding: 60px 40px; height: auto; min-height: 440px; }
+  .hero-text h1 { font-size: clamp(30px, 4.4vw, 44px); }
+  .bluelly-products-section { padding: 60px 30px; }
+  .bluelly-product-grid { gap: 24px; }
+  .bluelly-cta-exact { padding-left: 30px; padding-right: 30px; }
+}
+@media (min-width: 769px) and (max-width: 900px) {
+  .bluelly-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Phones */
+@media (max-width: 768px) {
+  .bluelly-product-grid > * { min-width: 0; }
+  .bluelly-products-section { padding-left: 20px; padding-right: 20px; }
+  .why-grid-exact { gap: 36px 24px; }
+  .why-item-exact { width: 140px; }
+  .why-item-exact p { font-size: 15px; }
+  .testimonial-card { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .hero { height: auto; min-height: 460px; padding: 44px 20px 170px; }
+  .bluelly-product-grid { gap: 14px; }
+  .bluelly-product-title { flex-wrap: wrap; gap: 2px 8px; }
+  .bluelly-product-title h3 { font-size: 14px; }
+  .bluelly-product-title span { white-space: nowrap; }
+  .bluelly-product-actions { gap: 8px; }
+  .bluelly-product-actions .cart-btn { width: 40px; height: 40px; min-width: 40px; }
+  .bluelly-product-actions .buy-btn { height: 40px; padding: 0 14px; font-size: 13px; white-space: nowrap; gap: 6px; }
+  .bluelly-cta-exact h2 { font-size: 20px; }
+}
+
+/* Very narrow phones (≤ 359px): one product per row so nothing is clipped */
+@media (max-width: 359px) {
+  .bluelly-product-grid { grid-template-columns: 1fr; }
+  .category-list { gap: 18px; }
+  .category { width: 110px; }
+  .why-item-exact { width: 120px; }
+}

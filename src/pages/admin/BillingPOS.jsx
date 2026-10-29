@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Plus, Minus, Trash2, ShoppingCart, CheckCircle } from 'lucide-react';
 import { getProducts } from '../../api/productApi';
 import { createOrder } from '../../api/orderApi';
+import { resolveImageUrl } from '../../utils/format';
 
 export default function BillingPOS() {
   const navigate = useNavigate();
@@ -219,9 +220,7 @@ export default function BillingPOS() {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {filteredProducts.length > 0 ? (
             filteredProducts.map(product => {
-              const imageSrc = product.imageURL 
-                ? (product.imageURL.startsWith('http') ? product.imageURL : `http://localhost:5008${product.imageURL}`)
-                : null;
+              const imgSrc = resolveImageUrl(product.image || product.imageURL);
 
               // Real-time stock monitoring calculation
               const dbStock = product.stock ?? 0;
@@ -232,34 +231,41 @@ export default function BillingPOS() {
                 <div
                   key={product._id}
                   onClick={() => addToCart(product)}
-                  className={`bg-white rounded-xl p-4 border border-gray-100 shadow-sm transition cursor-pointer hover:border-bluely-500 hover:shadow-md flex flex-col justify-between ${liveStock <= 0 ? 'opacity-60 bg-gray-50' : ''}`}
+                  className={`group bg-white rounded-xl p-3.5 border border-gray-100 shadow-xs transition cursor-pointer hover:border-bluely-500 hover:shadow-md flex flex-col justify-between ${liveStock <= 0 ? 'opacity-60 bg-gray-50 pointer-events-none' : ''}`}
                 >
                   <div>
                     <div className="flex justify-between items-start mb-2">
-                      <span className="bg-gray-100 text-gray-600 text-[10px] font-semibold px-2 py-0.5 rounded">
+                      <span className="bg-slate-100 text-slate-700 text-[11px] font-medium px-2 py-0.5 rounded-md">
                         {typeof product.category === 'object' ? product.category?.name : product.category}
                       </span>
-                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${liveStock <= 10 ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}`}>
+                      <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md ${liveStock <= 10 ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-700'}`}>
                         Stock: {liveStock}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-3 mb-3">
-                      {imageSrc ? (
-                        <img src={imageSrc} alt={product.name} className="w-12 h-12 object-cover rounded-lg border border-gray-100 bg-gray-50 flex-shrink-0" />
-                      ) : (
-                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-xs flex-shrink-0">Img</div>
-                      )}
-                      <div>
-                        <h3 className="font-semibold text-gray-800 text-sm line-clamp-1">{product.name}</h3>
-                        {product.litre && <p className="text-xs text-gray-400">{product.litre}</p>}
-                      </div>
+                    {/* Product Image Frame */}
+                    <div className="w-full h-32 rounded-xl bg-gradient-to-b from-slate-50 to-slate-100/60 border border-slate-100 p-2.5 mb-2.5 flex items-center justify-center overflow-hidden">
+                      <img
+                        src={imgSrc}
+                        alt={product.name}
+                        loading="lazy"
+                        className="max-h-full max-w-full object-contain drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/images/Product.png';
+                        }}
+                      />
+                    </div>
+
+                    <div className="mb-2">
+                      <h3 className="font-semibold text-gray-800 text-sm line-clamp-1">{product.name}</h3>
+                      {product.litre && <p className="text-xs text-gray-400 mt-0.5">{product.litre}</p>}
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center pt-3 border-t border-gray-50">
+                  <div className="flex justify-between items-center pt-2.5 border-t border-gray-100">
                     <span className="font-bold text-gray-900 text-base">₹{product.price}</span>
-                    <span className="bg-[#041A71] text-bluely-600 p-1.5 rounded-lg text-xs font-semibold flex items-center gap-1">
+                    <span className="bg-[#041A71] text-white hover:bg-bluely-600 px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 shadow-xs transition">
                       <Plus size={14} /> Add
                     </span>
                   </div>
@@ -325,7 +331,18 @@ export default function BillingPOS() {
           <div className="overflow-y-auto max-h-[calc(100vh-28rem)] divide-y divide-gray-50 pr-1">
             {cart.length > 0 ? (
               cart.map(item => (
-                <div key={item._id} className="py-2.5 flex items-center justify-between gap-2">
+                <div key={item._id} className="py-2.5 flex items-center justify-between gap-2.5">
+                  <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200/60 p-1 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    <img
+                      src={resolveImageUrl(item.image || item.imageURL)}
+                      alt={item.name}
+                      className="max-h-full max-w-full object-contain"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = '/images/Product.png';
+                      }}
+                    />
+                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold text-gray-800 truncate">{item.name}</p>
                     <p className="text-[11px] text-gray-500">₹{item.price} × {item.quantity}</p>

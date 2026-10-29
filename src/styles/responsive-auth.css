@@ -1,0 +1,10 @@
+/* ═════════════ RESPONSIVE – FORGOT / OTP / RESET ═════════════ */
+#forgotForm, #otpForm, #resetForm { box-sizing: border-box; }
+#forgotForm input, #otpForm input, #resetForm input { max-width: 100%; }
+
+@media (max-width: 600px) {
+  #forgotForm, #otpForm, #resetForm { width: 92%; min-width: 0; padding: 40px 22px; }
+}
+@media (max-height: 640px) {
+  body { height: auto; min-height: 100%; padding: 20px 0; }
+}

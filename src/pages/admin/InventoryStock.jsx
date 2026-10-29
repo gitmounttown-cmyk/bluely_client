@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react';
 import { getProducts, createProduct, updateProduct, deleteProduct } from '../../api/productApi';
 import { getCategories } from '../../api/categoryApi';
 import ProductModal from '../../components/admin/modals/ProductModal';
+import { resolveImageUrl } from '../../utils/format';
 
 export default function InventoryStock() {
   const [products, setProducts] = useState([]);
@@ -96,27 +97,25 @@ export default function InventoryStock() {
           <tbody className="divide-y divide-gray-100 text-sm">
             {Array.isArray(products) && products.length > 0 ? (
               products.map(item => {
-                const imageSrc = item.imageURL 
-                  ? (item.imageURL.startsWith('http') ? item.imageURL : `http://localhost:5008${item.imageURL}`)
-                  : null;
+                const imgSrc = resolveImageUrl(item.image || item.imageURL);
 
                 return (
                   <tr key={item._id} className="hover:bg-gray-50">
                     <td className="py-3.5 px-6 font-medium">
                       <div className="flex items-center gap-3">
-                        {imageSrc ? (
+                        <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200/70 p-1 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-xs">
                           <img 
-                            src={imageSrc} 
+                            src={imgSrc} 
                             alt={item.name} 
-                            className="w-10 h-10 object-cover rounded-lg border border-gray-100 bg-gray-50 flex-shrink-0"
-                            onError={(e) => { e.target.style.display = 'none'; }} 
+                            loading="lazy"
+                            className="max-h-full max-w-full object-contain"
+                            onError={(e) => { 
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = '/images/Product.png'; 
+                            }} 
                           />
-                        ) : (
-                          <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-xs flex-shrink-0">
-                            No Img
-                          </div>
-                        )}
-                        <span>{item.name}</span>
+                        </div>
+                        <span className="font-medium text-gray-800">{item.name}</span>
                       </div>
                     </td>
                     <td className="py-3.5 px-6 text-gray-600">

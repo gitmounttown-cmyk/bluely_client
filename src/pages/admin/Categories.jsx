@@ -7,6 +7,7 @@ import {
   updateCategory,
   deleteCategory,
 } from "../../api/categoryApi";
+import { resolveImageUrl } from "../../utils/format";
 
 import CategoryModal from "../../components/admin/modals/CategoryModal";
 
@@ -203,17 +204,17 @@ export default function Categories() {
                 <div>
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center gap-3">
-                      {imgSrc ? (
+                      <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-200/60 p-1 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-xs">
                         <img
-                          src={imgSrc}
+                          src={resolveImageUrl(cat.imageURL || cat.image)}
                           alt={cat.name}
-                          className="w-12 h-12 object-cover rounded-lg border border-gray-100 bg-gray-50 flex-shrink-0"
+                          className="max-h-full max-w-full object-contain"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = '/images/Product.png';
+                          }}
                         />
-                      ) : (
-                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-xs flex-shrink-0">
-                          Img
-                        </div>
-                      )}
+                      </div>
                       <div>
                         <h3 className="font-bold text-gray-800 text-base">
                           {cat.name}

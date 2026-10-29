@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { X, Upload } from "lucide-react";
+import { X, Upload, Image as ImageIcon } from "lucide-react";
+import { resolveImageUrl } from "../../../utils/format";
 
 export default function ProductModal({
   isOpen,
@@ -31,7 +32,7 @@ export default function ProductModal({
         litre: editingProduct?.litre || "",
       });
       setImageFile(null);
-      setImagePreview(editingProduct?.imageURL || "");
+      setImagePreview(editingProduct?.imageURL || editingProduct?.image || "");
       setError("");
     }
   }, [isOpen, editingProduct]);
@@ -232,23 +233,30 @@ export default function ProductModal({
                 Product Image
               </label>
               <div className="flex items-center gap-4">
-                {imagePreview && (
-                  <img
-                    src={
-                      imagePreview.startsWith("blob:") || imagePreview.startsWith("http")
-                        ? imagePreview
-                        : `http://localhost:5008${imagePreview}`
-                    }
-                    alt="Preview"
-                    className="w-16 h-16 object-cover rounded-lg border border-gray-200 bg-gray-50"
-                  />
+                {imagePreview ? (
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl border border-gray-200 bg-slate-50 p-1.5 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-xs">
+                    <img
+                      src={resolveImageUrl(imagePreview)}
+                      alt="Preview"
+                      className="max-h-full max-w-full object-contain"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = '/images/Product.png';
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl border border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center flex-shrink-0 text-gray-400">
+                    <ImageIcon size={22} className="mb-0.5 text-gray-400" />
+                    <span className="text-[10px] text-gray-400 font-medium">No Image</span>
+                  </div>
                 )}
-                <label className="flex-1 cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-bluely-500 transition bg-gray-50">
+                <label className="flex-1 cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-4 hover:border-bluely-500 hover:bg-bluely-50/20 transition bg-gray-50">
                   <Upload size={20} className="text-gray-400 mb-1" />
                   <span className="text-xs text-gray-600 font-medium">
                     {imageFile ? imageFile.name : "Click to upload image file"}
                   </span>
-                  <span className="text-[10px] text-gray-400 mt-0.5">PNG, JPG, JPEG</span>
+                  <span className="text-[10px] text-gray-400 mt-0.5">PNG, JPG, WEBP</span>
                   <input
                     type="file"
                     name="image"

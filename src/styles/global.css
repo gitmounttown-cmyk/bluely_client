@@ -1,0 +1,51 @@
+/* ─────────────────────────────────────────────────────────────
+   GLOBAL (always loaded). Everything page-specific lives in the
+   per-page stylesheets that are mounted/unmounted by usePageStyles,
+   so each React route gets exactly the same CSS cascade the matching
+   .html page had.
+   ───────────────────────────────────────────────────────────── */
+
+/* Montserrat Regular. Registered once so it never flickers when the
+   route (and its page stylesheets) changes.
+   NOTE: the family is "BluelyMon1" (the old "Mon1"). dashboard.css still asks
+   for 'Mon1', which was never defined on that page, so it keeps falling
+   back to Helvetica exactly like dashboard.html did. */
+@font-face {
+  font-family: "BluelyMon1";
+  src: url("/fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: 500;
+}
+
+/* React's mount node must not create a box, so that page markup is still a
+   direct child of <body> (dashboard & password pages use body{display:flex}). */
+#root {
+  display: contents;
+}
+
+/* Toast (was injected by showNotification() in shared.js) */
+@keyframes bluelySlideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+.bluely-notification {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 8px;
+  z-index: 9999;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: bluelySlideIn 0.3s ease;
+  max-width: calc(100vw - 40px);
+  font-family: Helvetica, Arial, sans-serif;
+}
+.bluely-notification.success { background: #27ae60; }
+.bluely-notification.error   { background: #e74c3c; }
+.bluely-notification.leaving {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+}

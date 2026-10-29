@@ -12,7 +12,7 @@ export default function Orders() {
       setLoading(true);
       setError('');
       const res = await getOrders();
-      const orderData = res.data?.data || res.data?.orders || res.data;
+      const orderData = Array.isArray(res.data) ? res.data : (res.data?.data || res.data?.orders || []);
       setOrders(Array.isArray(orderData) ? orderData : []);
     } catch (err) {
       console.error("Error fetching orders:", err);
@@ -29,19 +29,28 @@ export default function Orders() {
 
   const handleDownloadInvoice = (order) => {
     const printWindow = window.open('', '_blank');
-    const itemsHtml = order.items.map(item => `
-      <tr>
-        <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.productName}</td>
-        <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">${item.quantity}</td>
-        <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">₹${item.price}</td>
-        <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">₹${item.lineTotal}</td>
-      </tr>
-    `).join('');
+    const items = Array.isArray(order.items) ? order.items : [];
+    
+    const itemsHtml = items.map(item => {
+      const name = item.productName || item.product?.name || 'Product Item';
+      const qty = item.quantity || 1;
+      const price = item.price || 0;
+      const lineTotal = item.lineTotal || (price * qty);
+
+      return `
+        <tr>
+          <td style="padding: 10px; border-bottom: 1px solid #ddd;">${name}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">${qty}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">₹${price}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">₹${lineTotal}</td>
+        </tr>
+      `;
+    }).join('');
 
     printWindow.document.write(`
       <html>
         <head>
-          <title>Invoice - #${order.orderNo}</title>
+          <title>Invoice - #${order.orderNo || order._id}</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 30px; color: #333; }
             .header { display: flex; justify-content: space-between; border-bottom: 2px solid #0284c7; padding-bottom: 15px; margin-bottom: 20px; }
@@ -59,13 +68,13 @@ export default function Orders() {
               <p style="margin: 4px 0; color: #666; font-size: 12px;">Admin & POS Invoice Receipt</p>
             </div>
             <div style="text-align: right;">
-              <p style="margin: 0; font-weight: bold;">Order: #${order.orderNo}</p>
-              <p style="margin: 4px 0; color: #666; font-size: 12px;">Date: ${new Date(order.createdAt).toLocaleString()}</p>
+              <p style="margin: 0; font-weight: bold;">Order: #${order.orderNo || order._id}</p>
+              <p style="margin: 4px 0; color: #666; font-size: 12px;">Date: ${new Date(order.createdAt || Date.now()).toLocaleString()}</p>
             </div>
           </div>
-          <p><strong>Customer:</strong> ${order.customerName}</p>
-          <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
-          <p><strong>Status:</strong> ${order.status}</p>
+          <p><strong>Customer:</strong> ${order.customerName || order.user?.name || 'Walk-in Customer'}</p>
+          <p><strong>Payment Method:</strong> ${order.paymentMethod || 'Cash'}</p>
+          <p><strong>Status:</strong> ${order.orderStatus || order.status || 'Completed'}</p>
           <table>
             <thead>
               <tr>
@@ -80,9 +89,9 @@ export default function Orders() {
             </tbody>
           </table>
           <div class="totals">
-            <div><span>Subtotal:</span> <span>₹${order.subtotal}</span></div>
-            <div><span>GST (18%):</span> <span>₹${order.tax}</span></div>
-            <div class="grand-total"><span>Grand Total:</span> <span>₹${order.totalAmount}</span></div>
+            <div><span>Subtotal:</span> <span>₹${order.subtotal || order.totalAmount || 0}</span></div>
+            <div><span>GST (18%):</span> <span>₹${order.tax || 0}</span></div>
+            <div class="grand-total"><span>Grand Total:</span> <span>₹${order.totalAmount || 0}</span></div>
           </div>
           <script>
             window.onload = () => { window.print(); };
@@ -123,18 +132,20 @@ export default function Orders() {
               <tr><td colSpan="6" className="py-8 text-center text-gray-400 text-sm">Loading orders...</td></tr>
             ) : Array.isArray(orders) && orders.length > 0 ? (
               orders.map(o => (
-                <tr key={o._id} className="hover:bg-gray-[#041A71]">
-                  <td className="py-3.5 px-6 font-semibold text-bluely-[#ffffff">#{o.orderNo || o._id}</td>
-                  <td className="py-3.5 px-6 font-medium text-gray-800">{o.customerName || 'Walk-in Customer'}</td>
+                <tr key={o._id} className="hover:bg-gray-50">
+                  <td className="py-3.5 px-6 font-semibold text-blue-900">#{o.orderNo || o._id.slice(-6)}</td>
+                  <td className="py-3.5 px-6 font-medium text-gray-800">{o.customerName || o.user?.name || 'Walk-in Customer'}</td>
                   <td className="py-3.5 px-6 text-gray-600">{o.paymentMethod || 'Cash'}</td>
-                  <td className="py-3.5 px-6 font-semibold text-gray-800">₹{o.totalAmount ?? o.total}</td>
+                  <td className="py-3.5 px-6 font-semibold text-gray-800">₹{o.totalAmount ?? o.total ?? 0}</td>
                   <td className="py-3.5 px-6">
-                    <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700">{o.status}</span>
+                    <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700">
+                      {o.orderStatus || o.status || 'Completed'}
+                    </span>
                   </td>
                   <td className="py-3.5 px-6 text-right">
                     <button
                       onClick={() => handleDownloadInvoice(o)}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-bluely-[#ffffff] bg-blue-[#041A71] hover:bg-blue-100 px-3 py-1.5 rounded-lg transition"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-blue-900 hover:bg-blue-800 px-3 py-1.5 rounded-lg transition"
                     >
                       <Download size={14} /> Download
                     </button>

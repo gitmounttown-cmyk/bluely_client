@@ -1,0 +1,177 @@
+/* FOOTER WRAP */
+.bluelly-footer-wrap {
+  background-color: #000000;
+  color: #fff;
+  padding: 30px 10px 0;
+  overflow: hidden;
+}
+
+/* FOOTER TOP */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+  gap: 40px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: footerIn 1s ease forwards;
+}
+
+/* FOOTER ENTRANCE */
+@keyframes footerIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* LOGO */
+.footer-logo img {
+  width: 140px;
+  animation: logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.footer-logo p {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* LINKS */
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  font-size: 15px !important;
+  padding: 0;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.footer-links li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.footer-links li:hover {
+  color: #eafff4;
+}
+
+.footer-links li:hover::after {
+  width: 100%;
+}
+
+/* SOCIAL ICONS */
+.footer-social {
+  display: flex;
+  gap: 18px;
+}
+
+.social-icon {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  opacity: 0.85;
+  transition: all 0.35s ease;
+}
+
+.footer-social a:hover .social-icon {
+  opacity: 1;
+  transform: translateY(-6px) scale(1.15);
+  fill: #eafff4;
+}
+
+
+/* FOOTER BOTTOM */
+.footer-bottom {
+  text-align: center;
+  padding: 20px 0;
+  border-top: none !important;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+/* ===============================
+   COMPACT FOOTER (0–768px)
+   =============================== */
+
+@media (max-width: 768px) {
+
+  .bluelly-footer-wrap {
+    padding: 20px 15px 0;
+    text-align: center;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* reduced gap */
+  }
+
+  /* Logo smaller */
+  .footer-logo img {
+    width: 100px;
+  }
+
+  .footer-logo p {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  /* Links compact */
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 18px;
+    font-size: 13px !important;
+  }
+
+  .footer-links li::after {
+    display: none; /* remove underline animation for compact look */
+  }
+
+  /* Social icons smaller */
+  .footer-social {
+    gap: 14px;
+  }
+
+  .social-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Bottom section tighter */
+  .footer-bottom {
+    margin-top: 15px;
+    padding: 12px 0;
+    font-size: 12px;
+  }
+}

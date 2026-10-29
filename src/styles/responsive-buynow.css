@@ -1,0 +1,16 @@
+/* ═════════════ RESPONSIVE – CHECKOUT ═════════════ */
+.avatar svg { display: block; }
+.chevron svg { display: block; }
+.address-phone-tag svg { flex-shrink: 0; }
+.order-item > * { min-width: 0; }
+.product-name { overflow-wrap: anywhere; }
+
+@media (max-width: 768px) {
+  .page-wrapper { padding-left: 14px; padding-right: 14px; }
+}
+@media (max-width: 380px) {
+  .card-header { padding-left: 14px; padding-right: 14px; }
+  .card-body { padding-left: 14px; padding-right: 14px; }
+  .card-title { letter-spacing: 0.6px; font-size: 12px; }
+  .price-row .label { font-size: 13px; }
+}
