@@ -1,0 +1,19 @@
+/* ═════════════ RESPONSIVE – CONTACT ═════════════ */
+/* Lucide replacements for the old Font Awesome <i> icons (same size / colour) */
+.contact-card .contact-card-icon { width: 36px; height: 36px; color: #041A71; display: block; margin: 0 auto 16px; transition: transform 0.3s ease; }
+.contact-card:hover .contact-card-icon { transform: scale(1.2) rotate(5deg); }
+.success-message .success-icon { width: 68px; height: 68px; color: #4CAF50; display: block; margin: 0 auto 22px; }
+@media (max-width: 768px) { .success-message .success-icon { width: 58px; height: 58px; } }
+
+.contact-cards > * { min-width: 0; }
+.contact-card p { overflow-wrap: anywhere; }
+
+@media (min-width: 769px) and (max-width: 1000px) {
+  .contact-cards { gap: 16px; }
+  .contact-card { padding-left: 14px; padding-right: 14px; }
+}
+
+@media (max-width: 480px) {
+  .contact-container { padding-left: 16px; padding-right: 16px; }
+  .success-message { width: calc(100% - 32px); max-width: 420px; padding: 28px 20px; }
+}

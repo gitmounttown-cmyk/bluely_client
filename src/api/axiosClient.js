@@ -1,7 +1,8 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config/config";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:5008/api",
+  baseURL: API_BASE_URL || "http://localhost:5008/api",
 });
 
 axiosClient.interceptors.request.use(
@@ -14,20 +15,21 @@ axiosClient.interceptors.request.use(
     if (config.data instanceof FormData) {
       delete config.headers["Content-Type"];
     }
-    
+
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.clear();
-      window.location.href = "/login";
+      // Only redirect if current path is under /admin
+      if (typeof window !== "undefined" && window.location.pathname.startsWith("/admin")) {
+        localStorage.removeItem("token");
+        window.location.href = "/admin/login";
+      }
     }
     return Promise.reject(error);
   }

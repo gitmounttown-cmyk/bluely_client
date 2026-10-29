@@ -1,0 +1,26 @@
+/* ═════════════ RESPONSIVE – DASHBOARD ═════════════ */
+.mobile-menu-toggle svg { display: block; margin: 0 auto; }
+.dropdown-arrow svg { display: block; }
+.btn-delete svg, .modal-close svg { display: block; margin: 0 auto; }
+.btn-delete, .modal-close { display: inline-flex; align-items: center; justify-content: center; }
+.review-link svg { margin-right: 3px; position: relative; top: -1px; }
+.empty-icon svg { display: block; margin: 0 auto; }
+.rating svg { margin-left: 2px; position: relative; top: -1px; }
+.btn-buy svg { margin-left: 4px; }
+
+/* grid items must be allowed to shrink or the cards push the page sideways */
+.product-list > * { min-width: 0; }
+.main-content { min-width: 0; }
+
+@media (max-width: 767px) {
+  /* original used width:40vw (sized for 2 columns); let cards fill their grid cell instead */
+  .product-card { width: auto; }
+  .product-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .order-filters .filter-btn { min-width: 0; }
+  .address-modal-content { max-width: calc(100vw - 24px); max-height: 92vh; overflow-y: auto; }
+}
+@media (max-width: 420px) {
+  .product-list { grid-template-columns: minmax(0, 1fr); }
+  .address-list { grid-template-columns: minmax(0, 1fr); }
+  .form-row { grid-template-columns: minmax(0, 1fr); flex-direction: column; }
+}

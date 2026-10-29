@@ -1,0 +1,35 @@
+/* ═════════════ RESPONSIVE – ABOUT ═════════════ */
+
+/* "Our Story" card was a fixed 350px wide → overflowed phones */
+.story-content > * { min-width: 0; }
+
+@media (max-width: 480px) {
+  .story-card { padding: 20px; max-width: 100%; }
+  .story-image-placeholder { width: 100%; max-width: 290px; height: auto; min-height: 150px; display: flex; align-items: center; justify-content: center; }
+  .story-image-placeholder img { max-width: 100%; height: auto; }
+  .story-text { font-size: 15px; }
+  .container { padding-left: 16px; padding-right: 16px; }
+  .center-box h2 { font-size: 26px; }
+}
+
+/* "What we believe": the absolutely-positioned circle layout needs ~1000px.
+   Use the stacked layout (same as the original mobile design) up to 900px. */
+@media (min-width: 769px) and (max-width: 900px) {
+  .beliefs-section { min-height: unset; padding: 50px 20px 60px; }
+  .beliefs-wrapper { position: static; height: auto; display: flex; flex-direction: column; align-items: center; max-width: 340px; }
+  .center-box { position: static; transform: none; width: 100%; max-width: 320px; height: 160px; margin: 12px 0; order: 3; }
+  .belief-item { position: static; transform: none !important; width: 100%; max-width: 320px; flex-direction: row !important; align-items: center; gap: 18px !important; padding: 14px 16px; background: rgba(255,255,255,.06); border-radius: 12px; margin-top: 10px; }
+  .belief-item.top { order: 1; }
+  .belief-item.left { order: 2; }
+  .belief-item.right { order: 4; }
+  .belief-item.bottom { order: 5; }
+  .belief-label { font-size: 15px; white-space: normal; text-align: left; }
+  .icon-circle { width: 64px; height: 64px; flex-shrink: 0; }
+  .icon-circle img { width: 38px; height: 38px; }
+}
+
+@media (max-width: 400px) {
+  .hero-overlay { padding-left: 14px; padding-right: 14px; }
+  .hero-title { font-size: 28px; }
+  .hero-subtitle { font-size: 14px; }
+}

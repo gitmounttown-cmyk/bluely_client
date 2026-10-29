@@ -85,7 +85,7 @@ export default function Profile() {
       
       // Delay slightly to show success message, then navigate to dashboard/billing
       setTimeout(() => {
-        navigate('/dashboard'); // Or navigate('/dashboard')
+        navigate('/admin/dashboard');
         window.location.reload(); // Refresh to update navbar state cleanly
       }, 1200);
 
