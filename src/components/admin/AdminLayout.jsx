@@ -43,7 +43,7 @@ export default function AdminLayout() {
         <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
         {/* Main View Area */}
-        <main className="p-6 flex-1 bg-gray-50">
+        <main className="p-3 sm:p-5 lg:p-6 flex-1 bg-gray-50 min-w-0">
           <Outlet />
         </main>
       </div>

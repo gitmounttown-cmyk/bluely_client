@@ -55,12 +55,8 @@ export default function Navbar() {
   }, [profileOpen]);
 
   const goToWishlist = () => {
-    if (!localStorage.getItem('token')) {
-      openAuth('login');
-      showNotification('Please login to view wishlist');
-      return;
-    }
-    navigate(`${ROUTES.DASHBOARD}?page=wishlist`);
+    navigate(ROUTES.PRODUCTS);
+    showNotification('Browse products to view and manage your favorite items.');
   };
 
   return (
@@ -127,9 +123,6 @@ export default function Navbar() {
                       <span>Browsing as</span>
                       <strong>Guest User</strong>
                     </div>
-                    <Link to={`${ROUTES.DASHBOARD}?page=wishlist`} className="dropdown-link" onClick={() => setProfileOpen(false)}>
-                      <Heart size={15} /> My Wishlist
-                    </Link>
                     <button
                       type="button"
                       onClick={() => {
@@ -160,16 +153,13 @@ export default function Navbar() {
                       <span>Signed in as</span>
                       <strong>{user?.name || 'Customer'}</strong>
                     </div>
-                    <Link to={ROUTES.DASHBOARD} className="dropdown-link" onClick={() => setProfileOpen(false)}>
-                      <User size={15} /> My Profile
-                    </Link>
                     {hasAdminAccess && (
                       <Link
                         to={ROUTES.ADMIN_DASHBOARD}
                         className="dropdown-link admin-link"
                         onClick={() => setProfileOpen(false)}
                       >
-                        <ShieldCheck size={15} /> Admin Portal
+                        <ShieldCheck size={15} /> Admin Dashboard
                       </Link>
                     )}
                     <div className="dropdown-divider" />

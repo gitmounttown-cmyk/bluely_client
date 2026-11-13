@@ -68,21 +68,22 @@ export default function InventoryStock() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold text-gray-800">Product Inventory Stock</h2>
           <p className="text-xs text-gray-500">Manage stock levels, pricing, and product catalogs.</p>
         </div>
         <button 
           onClick={() => { setEditingProduct(null); setIsModalOpen(true); }} 
-          className="bg-bluely-500 hover:bg-bluely-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2"
+          className="bg-bluely-500 hover:bg-bluely-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 w-full sm:w-auto"
         >
           <Plus size={16} /> Add New Product
         </button>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto w-full">
+        <table className="w-full text-left border-collapse min-w-[700px]">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
               <th className="py-3 px-6">Product Name</th>
@@ -157,6 +158,7 @@ export default function InventoryStock() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
 
       <ProductModal 

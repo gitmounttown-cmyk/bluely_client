@@ -6,7 +6,7 @@ export const ROUTES = {
   CATEGORIES: '/categories',
   ABOUT: '/about',
   CONTACT: '/contact',
-  DASHBOARD: '/dashboard',
+  DASHBOARD: '/admin/dashboard', // Unified: Only ONE dashboard (Admin Dashboard)
   BUY_NOW: '/buynow',
   FORGOT_PASSWORD: '/forgot-password',
   VERIFY_OTP: '/otp',

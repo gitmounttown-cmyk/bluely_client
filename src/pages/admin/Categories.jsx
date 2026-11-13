@@ -137,13 +137,13 @@ export default function Categories() {
 
   const getImageUrl = (url) => {
     if (!url) return null;
-    return url.startsWith("http") ? url : `http://localhost:5008${url}`;
+    return resolveImageUrl(url);
   };
 
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold text-gray-800">
             Product Categories
@@ -157,7 +157,7 @@ export default function Categories() {
         <button
           type="button"
           onClick={handleAddCategory}
-          className="bg-bluely-500 hover:bg-bluely-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2"
+          className="bg-bluely-500 hover:bg-bluely-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 w-full sm:w-auto"
         >
           <Plus size={16} />
           Add Category
@@ -193,7 +193,7 @@ export default function Categories() {
 
       {/* Category Grid */}
       {!loading && categories.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {categories.map((cat) => {
             const imgSrc = getImageUrl(cat.imageURL);
             return (

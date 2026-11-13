@@ -42,8 +42,8 @@ export const routes = [
     ],
   },
 
-  // ── Customer Dedicated Pages ──
-  { path: ROUTES.DASHBOARD, Component: Dashboard },
+  // ── Unified Dashboard: Only ONE dashboard across the entire app (Admin Dashboard) ──
+  { path: '/dashboard', Component: () => <Navigate to={ROUTES.ADMIN_DASHBOARD} replace /> },
   { path: ROUTES.BUY_NOW, Component: BuyNow },
   { path: ROUTES.FORGOT_PASSWORD, Component: ForgotPassword },
   { path: ROUTES.VERIFY_OTP, Component: VerifyOtp },

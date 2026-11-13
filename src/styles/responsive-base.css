@@ -1,10 +1,9 @@
 /* ═════════════════════════════════════════════════════════════
    RESPONSIVE – shared by Home / Products / About / Contact
    (navbar, cart sidebar, auth modal, footer, Lucide icons)
-   Loaded after the original CSS, desktop look is unchanged.
    ═════════════════════════════════════════════════════════════ */
 
-/* Safety net: nothing may widen the page sideways */
+/* Safety net: prevent horizontal scrollbar from overflowing elements */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { overflow-x: clip; }
 img, svg, video { max-width: 100%; }
@@ -21,8 +20,7 @@ svg.lucide { flex-shrink: 0; vertical-align: middle; }
 .cart-btn svg { display: block; margin: 0 auto; }
 .actions .cart svg { display: block; margin: 0 auto; }
 
-/* ── Cart sidebar: slide with transform so the hidden panel never
-      widens the page (it used to sit at right:-400px) ────────── */
+/* ── Cart sidebar ─────────────────────────────────────────── */
 .cart-sidebar {
   right: 0;
   max-width: 100%;
@@ -38,28 +36,99 @@ svg.lucide { flex-shrink: 0; vertical-align: middle; }
 .cart-header button, .cart-item-actions button { cursor: pointer; }
 .cart-item-actions button { display: inline-flex; align-items: center; justify-content: center; }
 
-/* ── Auth modal: never taller than the screen ─────────────── */
+/* ── Auth modal ───────────────────────────────────────────── */
 .modal-content { max-height: 92vh; overflow-y: auto; }
 
-/* ── Tablet (769 – 1100) ──────────────────────────────────── */
-@media (min-width: 769px) and (max-width: 1100px) {
-  .navbar { padding-left: 24px; padding-right: 24px; }
-  .nav-icons { margin-left: 0; }
+/* ── Navbar across viewports ──────────────────────────────── */
+@media (min-width: 900px) {
+  .hamburger {
+    display: none !important;
+  }
+  .menu {
+    display: flex !important;
+    gap: 28px;
+    align-items: center;
+  }
+  .navbar {
+    padding: 14px 40px;
+  }
 }
 
-/* ── Phones / small tablets ───────────────────────────────── */
-@media (max-width: 768px) {
-  .nav-icons { margin-left: 0; gap: 14px; }
-  .hamburger { padding: 6px; box-sizing: content-box; cursor: pointer; }
-  .profile-dropdown { right: 0; left: auto; }
-  .bluely-notification { top: 78px; right: 12px; left: 12px; max-width: none; text-align: center; }
+@media (max-width: 899px) {
+  .navbar {
+    padding: 12px 18px;
+  }
+  .hamburger {
+    display: flex !important;
+    padding: 6px;
+    box-sizing: content-box;
+    cursor: pointer;
+    margin-left: 6px;
+  }
+  .menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    padding: 8px 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    z-index: 899;
+  }
+  .menu.active {
+    display: flex !important;
+  }
+  .menu a {
+    margin: 0;
+    padding: 12px 20px;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 15px;
+    color: #041a71;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .menu a:last-child {
+    border-bottom: none;
+  }
 
-  .bluelly-footer-wrap .footer-top { flex-wrap: wrap; justify-content: center; gap: 20px; }
+  .nav-icons {
+    margin-left: 0 !important;
+    gap: 14px;
+  }
+  .profile-dropdown {
+    right: 0;
+    left: auto;
+    max-width: calc(100vw - 32px);
+  }
+  .bluely-notification {
+    top: 78px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+    text-align: center;
+  }
+  .bluelly-footer-wrap .footer-top {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
 }
 
 @media (max-width: 480px) {
-  .navbar { padding-left: 12px; padding-right: 12px; }
-  .logo { width: 96px; }
-  .nav-icons { gap: 12px; }
-  .cart-sidebar { width: 100%; }
+  .navbar {
+    padding: 10px 14px;
+  }
+  .logo {
+    width: 96px;
+    height: 32px;
+  }
+  .nav-icons {
+    gap: 12px;
+  }
+  .cart-sidebar {
+    width: 100%;
+  }
 }
