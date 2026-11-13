@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Handshake, CheckCircle, FileText, Eye, X, AlertCircle, Plus} from 'lucide-react';
 import { getDealers, approveDealerRequest, createDealerRequest } from '../../api/dealerApi';
+import { resolveImageUrl } from '../../utils/format';
 
 export default function Dealers() {
   const [dealers, setDealers] = useState([]);
@@ -112,19 +113,19 @@ export default function Dealers() {
   // Helper to format file server URLs
   const getFileUrl = (path) => {
     if (!path) return '';
-    return path.startsWith('http') ? path : `http://localhost:5008${path}`;
+    return resolveImageUrl(path);
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold text-gray-800">Dealer Partnership Requests</h2>
           <p className="text-xs text-gray-500">Review, verify compliance documents, and approve regional distributor applications.</p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-1.5 bg-bluely-500 hover:bg-bluely-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition"
+          className="flex items-center justify-center gap-1.5 bg-bluely-500 hover:bg-bluely-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition w-full sm:w-auto"
         >
           <Plus size={16} /> New Application
         </button>
@@ -137,7 +138,8 @@ export default function Dealers() {
       )}
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto w-full">
+        <table className="w-full text-left border-collapse min-w-[750px]">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
               <th className="py-3 px-6">Applicant Name</th>
@@ -207,12 +209,13 @@ export default function Dealers() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* DOCUMENT VERIFICATION INSPECTION MODAL */}
       {selectedDealer && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl space-y-4">
+          <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-5 sm:p-6 shadow-xl space-y-4">
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <div>
                 <h3 className="font-bold text-gray-800 text-base">{selectedDealer.name} - Documents</h3>

@@ -23,18 +23,18 @@ export default function Sidebar({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Mobile Drawer Overlay */}
+      {/* Mobile & Tablet Drawer Overlay */}
       {isOpen && (
         <div 
           onClick={onClose} 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden" 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden" 
         />
       )}
 
       {/* Sidebar Navigation */}
       <aside className={`
-        fixed md:static inset-y-0 left-0 z-50 w-64 bg-[#041A71] text-[#ffffff] flex flex-col justify-between h-screen shrink-0 transition-transform duration-300
-        ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#041A71] text-[#ffffff] flex flex-col justify-between h-screen shrink-0 transition-transform duration-300
+        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <div>
           {/* Brand Header */}
@@ -42,7 +42,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <Link to={ROUTES.ADMIN_DASHBOARD} className="text-xl font-bold tracking-wider text-white flex items-center">
               BLUELY <span className="text-sky-300 text-xs uppercase px-2 py-0.5 bg-sky-950/60 rounded ml-2 border border-sky-500/30">Admin</span>
             </Link>
-            <button onClick={onClose} className="md:hidden text-slate-300 hover:text-white">
+            <button onClick={onClose} className="lg:hidden text-slate-300 hover:text-white" aria-label="Close menu">
               <X size={20} />
             </button>
           </div>

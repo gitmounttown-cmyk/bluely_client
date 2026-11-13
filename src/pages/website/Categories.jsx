@@ -13,7 +13,7 @@ const FALLBACK_CATEGORIES = [
   { _id: 'c2', name: 'Floor & Surface Care', imageURL: '/images/Ellipse 13.png', description: 'Disinfectant phenyls, tile cleaners, and heavy-duty degreasers.' },
   { _id: 'c3', name: 'Bathroom & Toilet Care', imageURL: '/images/Ellipse 14.png', description: 'Powerful toilet bowl cleaners, descalers, and sanitizers.' },
   { _id: 'c4', name: 'Personal Hygiene', imageURL: '/images/Ellipse 15.png', description: 'Gentle handwashes, antibacterial sanitizers, and body care.' },
-  { _id: 'c5', name: 'Kitchen Care', imageURL: '/images/Ellipse 12.png', description: 'Grease-cutting dishwash liquids, glass cleaners, and degreasers.' },
+  { _id: 'c5', name: 'Kitchen Hygiene', imageURL: '/images/Ellipse 12.png', description: 'Grease-cutting dishwash liquids, glass cleaners, and degreasers.' },
 ];
 
 export default function Categories() {
@@ -52,9 +52,9 @@ export default function Categories() {
   }, []);
 
   return (
-    <div className="categories-page-wrap" style={{ minHeight: '80vh', padding: '100px 20px 60px', background: '#f8fafc' }}>
+    <div className="categories-page-wrap">
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div className="categories-page-header" style={{ textAlign: 'center', marginBottom: '32px' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, color: '#0284c7', background: '#e0f2fe', padding: '6px 14px', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
             <Sparkles size={14} /> Bluely Catalog
           </span>
@@ -71,82 +71,33 @@ export default function Categories() {
             Loading categories catalog...
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '24px' }}>
+          <div className="categories-grid">
             {categories.map((cat) => {
               const img = resolveImageUrl(cat.imageURL || cat.image || '/images/Ellipse 12.png');
               return (
                 <div
                   key={cat._id || cat.id || cat.name}
+                  className="category-page-card"
                   onClick={() => navigate(`${ROUTES.PRODUCTS}?category=${encodeURIComponent(cat.name)}`)}
-                  style={{
-                    background: '#ffffff',
-                    borderRadius: '16px',
-                    padding: '24px 20px',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
-                    border: '1px solid #e2e8f0',
-                    cursor: 'pointer',
-                    transition: 'all 0.25s ease',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-6px)';
-                    e.currentTarget.style.boxShadow = '0 12px 30px rgba(7, 31, 107, 0.12)';
-                    e.currentTarget.style.borderColor = '#bae6fd';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
-                    e.currentTarget.style.borderColor = '#e2e8f0';
-                  }}
+                  title={`View ${cat.name} products`}
                 >
-                  <div
-                    style={{
-                      width: '110px',
-                      height: '110px',
-                      borderRadius: '50%',
-                      overflow: 'hidden',
-                      marginBottom: '16px',
-                      border: '3px solid #e0f2fe',
-                      boxShadow: '0 6px 16px rgba(0,0,0,0.06)',
-                      background: '#f8fafc',
-                    }}
-                  >
+                  <div className="category-card-img-box">
                     <img
                       src={img}
                       alt={cat.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       onError={(e) => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.src = '/images/Ellipse 12.png';
                       }}
                     />
                   </div>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#071f6b', margin: '0 0 8px 0' }}>
-                    {cat.name}
-                  </h3>
-                  <p style={{ fontSize: '13px', color: '#64748b', lineHeight: '1.5', margin: '0 0 16px 0', flex: 1 }}>
+                  <h3>{cat.name}</h3>
+                  <p>
                     {cat.description || 'Essential cleaning and care formulated for high performance.'}
                   </p>
-                  <button
-                    type="button"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      padding: '8px 16px',
-                      background: '#f0f7ff',
-                      color: '#0284c7',
-                      border: 'none',
-                      borderRadius: '50px',
-                      fontSize: '13px',
-                      fontWeight: 600,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    View Products <ArrowRight size={14} />
+                  <button type="button" className="explore-btn">
+                    <span>View Products</span>
+                    <ArrowRight size={14} />
                   </button>
                 </div>
               );

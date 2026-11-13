@@ -29,6 +29,7 @@ export function ProductsProvider({ children }) {
           id: p._id || p.id,
           image: img,
           imageURL: img,
+          litre: p.litre || p.volume || '1L',
           categoryName: cat || 'General',
         };
       });

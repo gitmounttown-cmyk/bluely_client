@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { X, Image as ImageIcon } from "lucide-react";
+import { resolveImageUrl } from "../../../utils/format";
 
 export default function CategoryModal({
   isOpen,
@@ -26,8 +27,7 @@ export default function CategoryModal({
       setImageFile(null);
 
       if (editingCategory?.imageURL) {
-        const url = editingCategory.imageURL;
-        setImagePreview(url.startsWith("http") ? url : `http://localhost:5008${url}`);
+        setImagePreview(resolveImageUrl(editingCategory.imageURL));
       } else {
         setImagePreview("");
       }

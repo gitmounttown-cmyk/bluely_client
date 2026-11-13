@@ -91,9 +91,9 @@ export default function Home() {
     };
   }, []);
 
-  // Use API categories or fallback defaults
+  // Use API categories or fallback defaults (show all categories from database/API)
   const categoriesList = useMemo(() => {
-    return apiCategories.length > 0 ? apiCategories.slice(0, 4) : DEFAULT_CATEGORIES;
+    return apiCategories.length > 0 ? apiCategories : DEFAULT_CATEGORIES;
   }, [apiCategories]);
 
   // Products to show in Products section (top 8)
@@ -188,16 +188,21 @@ export default function Home() {
               </div>
             );
           })}
-          <div className="category category-arrow-btn">
+          <div
+            className="category category-arrow-btn"
+            onClick={() => navigate(ROUTES.CATEGORIES)}
+            style={{ cursor: 'pointer' }}
+            title="View All Categories"
+          >
             <button
               type="button"
-              onClick={() => navigate(ROUTES.CATEGORIES)}
               className="category-circle-arrow"
               aria-label="View all categories"
-              title="View All Categories"
+              tabIndex={-1}
             >
               <ChevronRight size={32} />
             </button>
+            <span>View All</span>
           </div>
         </div>
       </section>
@@ -305,7 +310,7 @@ export default function Home() {
       </section>
 
       <section className="bluelly-cta-exact reveal">
-        <h2>"One Brand. Many Everyday Solutions."</h2>
+        <h2>"Pure Everyday Living with Our Thoughtfully Curated Collection"</h2>
         <div className="hero-buttons">
           <button type="button" className="primary" onClick={() => navigate(ROUTES.PRODUCTS)}>
             Explore All Products

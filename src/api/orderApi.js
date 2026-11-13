@@ -17,8 +17,11 @@ export const verifyPayment = (paymentData) =>
   axiosClient.post("/payment/verify-payment", paymentData);
 
 // Admin & Cashier dashboard order operations
-export const getOrders = () => 
-  axiosClient.get("/order/all");
+export const getOrders = (params = {}) => 
+  axiosClient.get("/order/all", { params });
 
 export const updateOrderStatus = (id, status) =>
   axiosClient.patch(`/order/${id}/status`, { status });
+
+export const updatePaymentStatus = (id, paymentStatus, bankReference = '') =>
+  axiosClient.patch(`/order/${id}/payment-status`, { paymentStatus, bankReference });

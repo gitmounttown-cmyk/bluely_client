@@ -1035,19 +1035,26 @@ button[type="submit"] {
 .categories h2 {
   color: #fff;
   font-size: 32px;
-  margin-bottom: 90px;
+  margin-bottom: 45px;
 }
 
 .category-list {
   display: flex;
-  gap: 52px;
+  gap: clamp(16px, 2.4vw, 36px);
   justify-content: center;
+  align-items: flex-start;
   flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .category {
   color: #fff;
-  width: 160px;
+  width: 135px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   transition: transform 0.3s ease;
 }
 
@@ -1055,22 +1062,34 @@ button[type="submit"] {
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  object-fit: cover;
   animation: floatIcon 4s ease-in-out infinite;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.category span {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 12px;
+  line-height: 1.35;
+  color: #ffffff;
 }
 
 .category:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
 }
 
 .category.category-arrow-btn {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .category-circle-arrow {
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: #ffffff;
   border: none;
@@ -1082,6 +1101,7 @@ button[type="submit"] {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
+  flex-shrink: 0;
 }
 
 .category-circle-arrow:hover {
@@ -1302,6 +1322,116 @@ button[type="submit"] {
 .bluelly-rating svg {
   color: #ffc107;
   fill: #ffc107;
+}
+
+/* Card Bulk Quantity Stepper & Direct Typing */
+.card-qty-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 10px 0 6px;
+  width: 100%;
+}
+
+.card-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  overflow: hidden;
+  height: 32px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-stepper:focus-within {
+  border-color: #081b6b;
+  box-shadow: 0 0 0 2px rgba(8, 27, 107, 0.12);
+}
+
+.card-qty-btn {
+  width: 26px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: #081b6b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.card-qty-btn:hover:not(:disabled) {
+  background-color: #e2e8f0;
+  color: #0284c7;
+}
+
+.card-qty-btn:active:not(:disabled) {
+  background-color: #cbd5e1;
+}
+
+.card-qty-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.card-qty-input {
+  width: 44px;
+  height: 100%;
+  border: none;
+  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  background: #ffffff;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #081b6b;
+  outline: none;
+  padding: 0 2px;
+  -moz-appearance: textfield;
+}
+
+.card-qty-input::-webkit-outer-spin-button,
+.card-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.card-qty-input:focus {
+  background: #eff6ff;
+}
+
+.card-vol-display {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 0;
+}
+
+.card-total-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #bae6fd;
+  white-space: nowrap;
+}
+
+.card-unit-badge {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
 }
 
 .bluelly-product-actions {
@@ -1760,4 +1890,82 @@ body {
     width: 95%;
     padding: 20px;
   }
+}
+/* =============================================================
+   ALL CATEGORIES PAGE CATALOG STYLES
+   ============================================================= */
+.categories-page-wrap {
+  min-height: 80vh;
+  padding: 100px 24px 60px;
+  background: #f8fafc;
+}
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 24px;
+}
+.category-page-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 18px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.category-page-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(7, 31, 107, 0.12);
+  border-color: #7dd3fc;
+}
+.category-card-img-box {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border: 3px solid #e0f2fe;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+.category-card-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.category-page-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #071f6b;
+  margin: 0 0 8px 0;
+}
+.category-page-card p {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0 0 16px 0;
+  flex: 1;
+}
+.category-page-card .explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: #f0f7ff;
+  color: #0284c7;
+  border: none;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.category-page-card:hover .explore-btn {
+  background: #0284c7;
+  color: #ffffff;
 }
